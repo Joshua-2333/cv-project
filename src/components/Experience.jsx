@@ -1,112 +1,109 @@
+// src/components/Experience.jsx
 import { useState } from "react";
 import "../styles/Experience.css";
 
 export default function Experience() {
-  const [experience, setExperience] = useState({
+  const [experiences, setExperiences] = useState([]);
+  const [form, setForm] = useState({
     company: "",
     position: "",
     responsibilities: "",
     fromDate: "",
     untilDate: "",
   });
-
-  const [isEditing, setIsEditing] = useState(true);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editIndex, setEditIndex] = useState(null);
 
   function handleChange(e) {
     const { name, value } = e.target;
-    setExperience((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setForm((prev) => ({ ...prev, [name]: value }));
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    setIsEditing(false);
+    if (isEditing) {
+      const updated = [...experiences];
+      updated[editIndex] = form;
+      setExperiences(updated);
+      setIsEditing(false);
+      setEditIndex(null);
+    } else {
+      setExperiences([...experiences, form]);
+    }
+    setForm({ company: "", position: "", responsibilities: "", fromDate: "", untilDate: "" });
   }
 
-  function handleEdit() {
+  function handleEdit(index) {
+    setForm(experiences[index]);
     setIsEditing(true);
+    setEditIndex(index);
+  }
+
+  function handleDelete(index) {
+    setExperiences(experiences.filter((_, i) => i !== index));
   }
 
   return (
     <section className="experience">
       <h2>Experience</h2>
 
-      {isEditing ? (
-        <form onSubmit={handleSubmit} className="experience-form">
-          <label>
-            Company
-            <input
-              type="text"
-              name="company"
-              placeholder="Company Name"
-              value={experience.company}
-              onChange={handleChange}
-              required
-            />
-          </label>
+      <form onSubmit={handleSubmit} className="experience-form">
+        <input
+          type="text"
+          name="company"
+          placeholder="Company Name"
+          value={form.company}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="text"
+          name="position"
+          placeholder="Position Title"
+          value={form.position}
+          onChange={handleChange}
+          required
+        />
+        <textarea
+          name="responsibilities"
+          placeholder="Main Responsibilities"
+          value={form.responsibilities}
+          onChange={handleChange}
+          rows={3}
+          required
+        />
+        <input
+          type="text"
+          name="fromDate"
+          placeholder="From (e.g. Jan 2020)"
+          value={form.fromDate}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="text"
+          name="untilDate"
+          placeholder="Until (e.g. Present)"
+          value={form.untilDate}
+          onChange={handleChange}
+          required
+        />
+        <button type="submit">{isEditing ? "Update" : "Add"}</button>
+      </form>
 
-          <label>
-            Position
-            <input
-              type="text"
-              name="position"
-              placeholder="Position Title"
-              value={experience.position}
-              onChange={handleChange}
-              required
-            />
-          </label>
-
-          <label>
-            Responsibilities
-            <textarea
-              name="responsibilities"
-              placeholder="Main Responsibilities"
-              value={experience.responsibilities}
-              onChange={handleChange}
-              rows={4}
-              required
-            ></textarea>
-          </label>
-
-          <label>
-            From
-            <input
-              type="text"
-              name="fromDate"
-              placeholder="e.g. Jan 2020"
-              value={experience.fromDate}
-              onChange={handleChange}
-              required
-            />
-          </label>
-
-          <label>
-            Until
-            <input
-              type="text"
-              name="untilDate"
-              placeholder="e.g. Present"
-              value={experience.untilDate}
-              onChange={handleChange}
-              required
-            />
-          </label>
-
-          <button type="submit">Save</button>
-        </form>
-      ) : (
-        <div className="experience-display">
-          <p><strong>Company:</strong> {experience.company}</p>
-          <p><strong>Position:</strong> {experience.position}</p>
-          <p><strong>Responsibilities:</strong> {experience.responsibilities}</p>
-          <p><strong>From:</strong> {experience.fromDate}</p>
-          <p><strong>Until:</strong> {experience.untilDate}</p>
-          <button onClick={handleEdit}>Edit</button>
-        </div>
-      )}
+      <div className="experience-list">
+        {experiences.map((exp, index) => (
+          <div key={index} className="experience-entry">
+            <p><strong>Company:</strong> {exp.company}</p>
+            <p><strong>Position:</strong> {exp.position}</p>
+            <p><strong>Responsibilities:</strong> {exp.responsibilities}</p>
+            <p><strong>From:</strong> {exp.fromDate}</p>
+            <p><strong>Until:</strong> {exp.untilDate}</p>
+            <button onClick={() => handleEdit(index)}>Edit</button>
+            <button onClick={() => handleDelete(index)}>Delete</button>
+          </div>
+        ))}
+      </div>
     </section>
   );
 }

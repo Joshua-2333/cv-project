@@ -1,4 +1,3 @@
-// src/App.jsx
 import { useState } from "react";
 import GeneralInfo from "./components/GeneralInfo";
 import Education from "./components/Education";
@@ -7,9 +6,16 @@ import CVPreview from "./components/CVPreview";
 import "./styles/App.css";
 
 export default function App() {
-  const [general, setGeneral] = useState({});
-  const [education, setEducation] = useState({});
-  const [experience, setExperience] = useState({});
+  // General info (single-entry)
+  const [general, setGeneral] = useState({
+    name: "",
+    email: "",
+    phone: "",
+  });
+
+  // Education & Experience (multi-entry)
+  const [education, setEducation] = useState([]); 
+  const [experience, setExperience] = useState([]);
 
   return (
     <div className="app">
@@ -17,17 +23,21 @@ export default function App() {
         <h1>CV Builder</h1>
       </header>
 
-      <main>
+      <main className="form-sections">
+        {/* Pass setters to children to lift state up */}
         <GeneralInfo onSubmit={setGeneral} />
         <Education onSubmit={setEducation} />
         <Experience onSubmit={setExperience} />
       </main>
 
-      <CVPreview
-        general={general}
-        education={education}
-        experience={experience}
-      />
+      {/* CV preview receives the full state */}
+      <aside className="preview-section">
+        <CVPreview
+          generalInfo={general}
+          educationList={education}
+          experienceList={experience}
+        />
+      </aside>
     </div>
   );
 }
