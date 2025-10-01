@@ -20,7 +20,7 @@
 
 .education h2 {
   font-size: 1.5rem;
-  color: #111; /* AA contrast */
+  color: #111; 
   margin-bottom: 0.5rem;
 }
 
@@ -34,7 +34,7 @@
 .education-form input {
   padding: 0.6rem 0.8rem;
   font-size: 1rem;
-  border: 1px solid #888; /* high contrast */
+  border: 1px solid #888; 
   border-radius: 6px;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }

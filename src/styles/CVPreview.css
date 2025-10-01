@@ -1,15 +1,182 @@
-.export-btn {
-  margin-top: 1rem;
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 6px;
-  background: #4caf50;
-  color: white;
+/* CVPreview.css */
+
+/* Wrapper */
+.cv-preview-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  align-items: center;
+}
+
+/* CV container */
+.cv-preview {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 1rem;
+  color: #111; 
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  max-width: 900px;
+  box-sizing: border-box;
+}
+
+/* Templates */
+.template-classic {
+  font-family: 'Georgia', serif;
+}
+
+.template-classic header {
+  border-color: #002b5c;
+}
+
+.template-modern {
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.template-modern header {
+  border-color: #007acc;
+}
+
+.template-minimal {
+  font-family: 'Helvetica Neue', sans-serif;
+}
+
+.template-minimal header {
+  border-color: #222;
+}
+
+/* Header */
+.cv-preview header {
+  text-align: center;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.cv-preview header h1 {
+  font-size: 1.8rem;
+  margin-bottom: 0.25rem;
+  color: #222;
+}
+
+.cv-preview header p {
   font-size: 1rem;
+  color: #333;
+}
+
+/* Sections */
+.preview-section, .about {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.preview-section h2, .about h2 {
+  font-size: 1.25rem;
+  color: #007bff;
+  margin-bottom: 0.5rem;
+}
+
+/* Lists */
+.education-list, .experience-list {
+  list-style: none;
+  padding-left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.education-item, .experience-item {
+  padding: 0.5rem;
+  border-left: 3px solid #007bff;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+/* Bold labels */
+.education-item strong,
+.experience-item strong {
+  color: #111;
+}
+
+/* About me */
+.about p {
+  padding: 0.5rem;
+  background-color: #f4f4f4;
+  border-radius: 6px;
+  line-height: 1.4;
+}
+
+/* Export button */
+.export-btn {
+  align-self: center;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: none;
   cursor: pointer;
-  transition: background 0.2s;
+  background-color: #28a745;
+  color: #fff;
+  transition: background-color 0.3s;
 }
 
 .export-btn:hover {
-  background: #43a047;
+  background-color: #218838;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .cv-preview {
+    padding: 0.75rem;
+  }
+
+  .cv-preview header h1 {
+    font-size: 1.5rem;
+  }
+
+  .cv-preview header p {
+    font-size: 0.95rem;
+  }
+
+  .preview-section h2, .about h2 {
+    font-size: 1.1rem;
+  }
+
+  .education-item, .experience-item {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .cv-preview {
+    padding: 0.5rem;
+  }
+
+  .cv-preview header h1 {
+    font-size: 1.25rem;
+  }
+
+  .cv-preview header p {
+    font-size: 0.9rem;
+  }
+
+  .preview-section h2, .about h2 {
+    font-size: 1rem;
+  }
+
+  .education-item, .experience-item {
+    font-size: 0.9rem;
+  }
+
+  .export-btn {
+    width: 100%;
+  }
 }

@@ -1,0 +1,155 @@
+/* App.css */
+
+/* Global resets */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f0f2f5;
+  color: #111; 
+  line-height: 1.6;
+}
+
+/* App container */
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 1rem;
+  gap: 1.5rem;
+}
+
+/* Header */
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+header h1 {
+  font-size: 2rem;
+  color: #222;
+}
+
+header .clear-btn {
+  background-color: #d9534f;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+header .clear-btn:hover {
+  background-color: #c9302c;
+}
+
+/* Main forms section */
+.form-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Form section common */
+.form-section {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 1rem;
+  border: 1px solid #ccc;
+}
+
+/* Form headings */
+.form-section h2 {
+  margin-bottom: 0.5rem;
+  font-size: 1.25rem;
+  color: #111;
+}
+
+/* Inputs and textareas */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+textarea,
+select {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #999;
+  font-size: 1rem;
+  color: #111;
+  background-color: #fff;
+}
+
+textarea {
+  resize: vertical;
+}
+
+select {
+  cursor: pointer;
+}
+
+/* Buttons */
+button {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: #fff;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Preview section */
+.preview-section {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  margin-top: 1rem;
+}
+
+/* Responsive layout */
+@media (min-width: 768px) {
+  .app {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .form-sections {
+    flex: 1;
+    margin-right: 1rem;
+  }
+
+  .preview-section {
+    flex: 1;
+    position: sticky;
+    top: 1rem;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+}
+
+/* Small devices */
+@media (max-width: 480px) {
+  header h1 {
+    font-size: 1.5rem;
+  }
+
+  button {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+  }
+}
