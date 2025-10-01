@@ -1,0 +1,20 @@
+.general-info {
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  background: #f9f9f9;
+}
+
+.general-info-form input {
+  display: block;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  width: 100%;
+}
+
+.general-info button {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}

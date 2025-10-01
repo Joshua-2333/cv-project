@@ -1,35 +1,33 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// src/App.jsx
+import { useState } from "react";
+import GeneralInfo from "./components/GeneralInfo";
+import Education from "./components/Education";
+import Experience from "./components/Experience";
+import CVPreview from "./components/CVPreview";
+import "./styles/App.css";
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [general, setGeneral] = useState({});
+  const [education, setEducation] = useState({});
+  const [experience, setExperience] = useState({});
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div className="app">
+      <header>
+        <h1>CV Builder</h1>
+      </header>
 
-export default App
+      <main>
+        <GeneralInfo onSubmit={setGeneral} />
+        <Education onSubmit={setEducation} />
+        <Experience onSubmit={setExperience} />
+      </main>
+
+      <CVPreview
+        general={general}
+        education={education}
+        experience={experience}
+      />
+    </div>
+  );
+}
