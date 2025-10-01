@@ -2,8 +2,7 @@
 import { useState } from "react";
 import "../styles/Experience.css";
 
-export default function Experience() {
-  const [experiences, setExperiences] = useState([]);
+export default function Experience({ experienceList, setExperience }) {
   const [form, setForm] = useState({
     company: "",
     position: "",
@@ -22,25 +21,26 @@ export default function Experience() {
   function handleSubmit(e) {
     e.preventDefault();
     if (isEditing) {
-      const updated = [...experiences];
+      const updated = [...experienceList];
       updated[editIndex] = form;
-      setExperiences(updated);
+      setExperience(updated);
       setIsEditing(false);
       setEditIndex(null);
     } else {
-      setExperiences([...experiences, form]);
+      setExperience([...experienceList, form]);
     }
     setForm({ company: "", position: "", responsibilities: "", fromDate: "", untilDate: "" });
   }
 
   function handleEdit(index) {
-    setForm(experiences[index]);
+    setForm(experienceList[index]);
     setIsEditing(true);
     setEditIndex(index);
   }
 
   function handleDelete(index) {
-    setExperiences(experiences.filter((_, i) => i !== index));
+    const updated = experienceList.filter((_, i) => i !== index);
+    setExperience(updated);
   }
 
   return (
@@ -92,7 +92,7 @@ export default function Experience() {
       </form>
 
       <div className="experience-list">
-        {experiences.map((exp, index) => (
+        {experienceList.map((exp, index) => (
           <div key={index} className="experience-entry">
             <p><strong>Company:</strong> {exp.company}</p>
             <p><strong>Position:</strong> {exp.position}</p>

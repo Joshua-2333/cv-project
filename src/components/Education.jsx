@@ -2,8 +2,7 @@
 import { useState } from "react";
 import "../styles/Education.css";
 
-export default function Education() {
-  const [educations, setEducations] = useState([]);
+export default function Education({ educationList, setEducation }) {
   const [form, setForm] = useState({ school: "", study: "", date: "" });
   const [isEditing, setIsEditing] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
@@ -16,27 +15,28 @@ export default function Education() {
   function handleSubmit(e) {
     e.preventDefault();
     if (isEditing) {
-      // update existing entry
-      const updated = [...educations];
+      // Update existing entry
+      const updated = [...educationList];
       updated[editIndex] = form;
-      setEducations(updated);
+      setEducation(updated);
       setIsEditing(false);
       setEditIndex(null);
     } else {
-      // add new entry
-      setEducations([...educations, form]);
+      // Add new entry
+      setEducation([...educationList, form]);
     }
     setForm({ school: "", study: "", date: "" }); // reset form
   }
 
   function handleEdit(index) {
-    setForm(educations[index]);
+    setForm(educationList[index]);
     setIsEditing(true);
     setEditIndex(index);
   }
 
   function handleDelete(index) {
-    setEducations(educations.filter((_, i) => i !== index));
+    const updated = educationList.filter((_, i) => i !== index);
+    setEducation(updated);
   }
 
   return (
@@ -72,7 +72,7 @@ export default function Education() {
       </form>
 
       <div className="education-list">
-        {educations.map((edu, index) => (
+        {educationList.map((edu, index) => (
           <div key={index} className="education-entry">
             <p><strong>School:</strong> {edu.school}</p>
             <p><strong>Study:</strong> {edu.study}</p>

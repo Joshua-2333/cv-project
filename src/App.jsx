@@ -43,10 +43,6 @@ export default function App() {
     localStorage.setItem("cvData", JSON.stringify(data));
   }, [general, about, education, experience, template]);
 
-  // Handlers to add new items
-  const addEducation = (edu) => setEducation((prev) => [...prev, edu]);
-  const addExperience = (exp) => setExperience((prev) => [...prev, exp]);
-
   // Clear all data
   const clearAll = () => {
     setGeneral({ name: "", email: "", phone: "" });
@@ -87,10 +83,10 @@ export default function App() {
         </div>
 
         {/* Education */}
-        <Education onSubmit={addEducation} />
+        <Education educationList={education} setEducation={setEducation} />
 
         {/* Experience */}
-        <Experience onSubmit={addExperience} />
+        <Experience experienceList={experience} setExperience={setExperience} />
       </main>
 
       {/* CV preview */}
