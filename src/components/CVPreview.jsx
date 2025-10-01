@@ -12,15 +12,16 @@ export default function CVPreview({
 }) {
   const cvRef = useRef();
 
-  // Export CV as PDF
+  // Export CV as PDF (fit to one page)
   function handleExportPDF() {
     if (!cvRef.current) return;
+
     const element = cvRef.current;
     const options = {
       margin: 0.5,
       filename: "my-cv.pdf",
       image: { type: "jpeg", quality: 0.98 },
-      html2canvas: { scale: 2, useCORS: true },
+      html2canvas: { scale: 2, useCORS: true, scrollY: -window.scrollY },
       jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
     };
     html2pdf().set(options).from(element).save();

@@ -1,80 +1,93 @@
 // src/components/GeneralInfo.jsx
-import { useState } from "react";
+import React from "react";
 import "../styles/GeneralInfo.css";
 
-export default function GeneralInfo({ onSubmit }) {
-  // State for the form values
-  const [info, setInfo] = useState({
-    name: "",
-    email: "",
-    phone: "",
-  });
+export default function GeneralInfo({ generalInfo = {}, setGeneralInfo }) {
+  const info = {
+    name: generalInfo.name || "",
+    email: generalInfo.email || "",
+    phone: generalInfo.phone || "",
+  };
 
-  // State to toggle between editing and displaying
-  const [isEditing, setIsEditing] = useState(true);
-
-  // Handle input changes
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setInfo((prevInfo) => ({
-      ...prevInfo,
-      [name]: value,
-    }));
+  // Format phone number as (123) 456-7890
+  function formatPhoneNumber(value) {
+    const digits = value.replace(/\D/g, "").substring(0, 10);
+    const len = digits.length;
+    if (len < 4) return digits;
+    if (len < 7) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+    return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6, 10)}`;
   }
 
-  // Handle submit
-  function handleSubmit(e) {
-    e.preventDefault();
-    setIsEditing(false); // switch to display mode
-    onSubmit(info);      // ⬅ send data to App
+  // Email validation
+  function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   }
 
-  // Handle edit
-  function handleEdit() {
-    setIsEditing(true); // switch back to form mode
+  // Name validation (at least 2 words)
+  function isValidName(name) {
+    return name.trim().split(" ").length >= 2;
+  }
+
+  // Phone validation (10 digits)
+  function isValidPhone(phone) {
+    return /^\(\d{3}\) \d{3}-\d{4}$/.test(phone);
   }
 
   return (
     <div className="general-info">
       <h2>General Information</h2>
+      <form className="general-info-form">
+        {/* Name */}
+        <input
+          type="text"
+          name="name"
+          placeholder="Full Name (e.g., John Doe)"
+          value={info.name}
+          onChange={(e) =>
+            setGeneralInfo((prev) => ({ ...prev, name: e.target.value }))
+          }
+          className={info.name ? (isValidName(info.name) ? "valid" : "invalid") : ""}
+          required
+        />
+        {info.name && !isValidName(info.name) && (
+          <small className="error">Enter at least first and last name</small>
+        )}
 
-      {isEditing ? (
-        <form onSubmit={handleSubmit} className="general-info-form">
-          <input
-            type="text"
-            name="name"
-            placeholder="Full Name"
-            value={info.name}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={info.email}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="tel"
-            name="phone"
-            placeholder="Phone Number"
-            value={info.phone}
-            onChange={handleChange}
-            required
-          />
+        {/* Email */}
+        <input
+          type="email"
+          name="email"
+          placeholder="Email (e.g., john@example.com)"
+          value={info.email}
+          onChange={(e) =>
+            setGeneralInfo((prev) => ({ ...prev, email: e.target.value }))
+          }
+          className={info.email ? (isValidEmail(info.email) ? "valid" : "invalid") : ""}
+          required
+        />
+        {info.email && !isValidEmail(info.email) && (
+          <small className="error">Invalid email address</small>
+        )}
 
-          <button type="submit">Submit</button>
-        </form>
-      ) : (
-        <div className="general-info-display">
-          <p><strong>Name:</strong> {info.name}</p>
-          <p><strong>Email:</strong> {info.email}</p>
-          <p><strong>Phone:</strong> {info.phone}</p>
-          <button onClick={handleEdit}>Edit</button>
-        </div>
-      )}
+        {/* Phone */}
+        <input
+          type="tel"
+          name="phone"
+          placeholder="Phone (e.g., (123) 456-7890)"
+          value={info.phone}
+          onChange={(e) =>
+            setGeneralInfo((prev) => ({
+              ...prev,
+              phone: formatPhoneNumber(e.target.value),
+            }))
+          }
+          className={info.phone ? (isValidPhone(info.phone) ? "valid" : "invalid") : ""}
+          required
+        />
+        {info.phone && !isValidPhone(info.phone) && (
+          <small className="error">Invalid phone format</small>
+        )}
+      </form>
     </div>
   );
 }

@@ -20,7 +20,7 @@
 
 .general-info h2 {
   font-size: 1.5rem;
-  color: #111; /* AA contrast */
+  color: #111;
   margin-bottom: 0.5rem;
 }
 
@@ -34,15 +34,41 @@
 .general-info-form input {
   padding: 0.6rem 0.8rem;
   font-size: 1rem;
-  border: 1px solid #888; /* dark enough for contrast */
+  border: 1px solid #888;
   border-radius: 6px;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  color: #111;
 }
 
+/* Placeholder text style */
+.general-info-form input::placeholder {
+  color: #aaa; /* lighter gray for example guidance */
+  font-style: italic;
+}
+
+/* Focus */
 .general-info-form input:focus {
   border-color: #0056b3;
   outline: none;
-  box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.25); /* visible focus */
+  box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.25);
+}
+
+/* Valid & Invalid States */
+.general-info-form input.invalid {
+  border-color: #e74c3c; /* red for invalid */
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
+}
+
+.general-info-form input.valid {
+  border-color: #27ae60; /* green for valid */
+  box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.2);
+}
+
+/* Error message */
+.general-info-form small.error {
+  color: #e74c3c;
+  font-size: 0.875rem;
+  margin-top: -0.5rem;
 }
 
 /* Buttons */
@@ -75,7 +101,7 @@
 .general-info-display p {
   margin: 0;
   font-size: 1rem;
-  color: #111; /* AA contrast */
+  color: #111;
 }
 
 /* Responsive */

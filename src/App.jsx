@@ -68,7 +68,7 @@ export default function App() {
 
       <main className="form-sections">
         {/* General Info */}
-        <GeneralInfo onSubmit={setGeneral} />
+        <GeneralInfo generalInfo={general} setGeneralInfo={setGeneral} />
 
         {/* About Me */}
         <AboutMe about={about} setAbout={setAbout} />
