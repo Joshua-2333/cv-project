@@ -1,6 +1,6 @@
-// src/App.jsx
 import { useState, useEffect } from "react";
 import GeneralInfo from "./components/GeneralInfo";
+import AboutMe from "./components/AboutMe";
 import Education from "./components/Education";
 import Experience from "./components/Experience";
 import CVPreview from "./components/CVPreview";
@@ -14,9 +14,15 @@ export default function App() {
     phone: "",
   });
 
+  // About Me
+  const [about, setAbout] = useState("");
+
   // Education & Experience (multi-entry lists)
   const [education, setEducation] = useState([]);
   const [experience, setExperience] = useState([]);
+
+  // Template selection
+  const [template, setTemplate] = useState("classic");
 
   // Load from localStorage on first mount
   useEffect(() => {
@@ -24,31 +30,30 @@ export default function App() {
     if (savedData) {
       const parsed = JSON.parse(savedData);
       if (parsed.general) setGeneral(parsed.general);
+      if (parsed.about) setAbout(parsed.about);
       if (parsed.education) setEducation(parsed.education);
       if (parsed.experience) setExperience(parsed.experience);
+      if (parsed.template) setTemplate(parsed.template);
     }
   }, []);
 
   // Save to localStorage whenever state changes
   useEffect(() => {
-    const data = { general, education, experience };
+    const data = { general, about, education, experience, template };
     localStorage.setItem("cvData", JSON.stringify(data));
-  }, [general, education, experience]);
+  }, [general, about, education, experience, template]);
 
   // Handlers to add new items
-  const addEducation = (edu) => {
-    setEducation((prev) => [...prev, edu]);
-  };
+  const addEducation = (edu) => setEducation((prev) => [...prev, edu]);
+  const addExperience = (exp) => setExperience((prev) => [...prev, exp]);
 
-  const addExperience = (exp) => {
-    setExperience((prev) => [...prev, exp]);
-  };
-
-  // Optional: Clear all data & localStorage
+  // Clear all data
   const clearAll = () => {
     setGeneral({ name: "", email: "", phone: "" });
+    setAbout("");
     setEducation([]);
     setExperience([]);
+    setTemplate("classic");
     localStorage.removeItem("cvData");
   };
 
@@ -62,13 +67,29 @@ export default function App() {
       </header>
 
       <main className="form-sections">
-        {/* General Info (single-entry) */}
+        {/* General Info */}
         <GeneralInfo onSubmit={setGeneral} />
 
-        {/* Education (multi-entry) */}
+        {/* About Me */}
+        <AboutMe about={about} setAbout={setAbout} />
+
+        {/* Template selector */}
+        <div className="form-section">
+          <h2>Choose Template</h2>
+          <select
+            value={template}
+            onChange={(e) => setTemplate(e.target.value)}
+          >
+            <option value="classic">Classic</option>
+            <option value="modern">Modern</option>
+            <option value="minimal">Minimal</option>
+          </select>
+        </div>
+
+        {/* Education */}
         <Education onSubmit={addEducation} />
 
-        {/* Experience (multi-entry) */}
+        {/* Experience */}
         <Experience onSubmit={addExperience} />
       </main>
 
@@ -76,8 +97,10 @@ export default function App() {
       <aside className="preview-section">
         <CVPreview
           generalInfo={general}
+          about={about}
           educationList={education}
           experienceList={experience}
+          template={template}
         />
       </aside>
     </div>

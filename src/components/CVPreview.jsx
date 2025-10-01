@@ -1,12 +1,17 @@
-// src/components/CVPreview.jsx
 import { useRef } from "react";
 import html2pdf from "html2pdf.js"; // install with: npm install html2pdf.js
 import "../styles/CVPreview.css";
 
-export default function CVPreview({ generalInfo, educationList, experienceList }) {
+export default function CVPreview({
+  generalInfo,
+  about,
+  educationList,
+  experienceList,
+  template,
+}) {
   const cvRef = useRef();
 
-  // Export the CV as PDF
+  // Export CV as PDF
   function handleExportPDF() {
     const element = cvRef.current;
     const options = {
@@ -21,30 +26,29 @@ export default function CVPreview({ generalInfo, educationList, experienceList }
 
   return (
     <div className="cv-preview-wrapper">
-      <div className="cv-preview" ref={cvRef}>
-        <h2>CV Preview</h2>
+      <div className={`cv-preview template-${template}`} ref={cvRef}>
+        <header>
+          <h1>{generalInfo.name || "Your Name"}</h1>
+          <p>
+            {generalInfo.email} | {generalInfo.phone}
+          </p>
+        </header>
 
-        {/* General Info */}
-        <section className="preview-section">
-          <h3>General Information</h3>
-          {generalInfo.name || generalInfo.email || generalInfo.phone ? (
-            <div className="general-info">
-              <p><strong>Name:</strong> {generalInfo.name}</p>
-              <p><strong>Email:</strong> {generalInfo.email}</p>
-              <p><strong>Phone:</strong> {generalInfo.phone}</p>
-            </div>
-          ) : (
-            <p>No general information provided yet.</p>
-          )}
-        </section>
+        {/* About Me */}
+        {about && (
+          <section className="about">
+            <h2>About Me</h2>
+            <p>{about}</p>
+          </section>
+        )}
 
         {/* Education */}
         <section className="preview-section">
-          <h3>Education</h3>
+          <h2>Education</h2>
           {educationList.length > 0 ? (
             <ul className="education-list">
-              {educationList.map((edu, index) => (
-                <li key={index} className="education-item">
+              {educationList.map((edu, i) => (
+                <li key={i} className="education-item">
                   <p><strong>School:</strong> {edu.school}</p>
                   <p><strong>Study:</strong> {edu.study}</p>
                   <p><strong>Date:</strong> {edu.date}</p>
@@ -58,11 +62,11 @@ export default function CVPreview({ generalInfo, educationList, experienceList }
 
         {/* Experience */}
         <section className="preview-section">
-          <h3>Experience</h3>
+          <h2>Experience</h2>
           {experienceList.length > 0 ? (
             <ul className="experience-list">
-              {experienceList.map((exp, index) => (
-                <li key={index} className="experience-item">
+              {experienceList.map((exp, i) => (
+                <li key={i} className="experience-item">
                   <p><strong>Company:</strong> {exp.company}</p>
                   <p><strong>Position:</strong> {exp.position}</p>
                   <p><strong>Responsibilities:</strong> {exp.responsibilities}</p>
@@ -77,7 +81,7 @@ export default function CVPreview({ generalInfo, educationList, experienceList }
         </section>
       </div>
 
-      {/* Export button */}
+      {/* Export PDF button */}
       <button className="export-btn" onClick={handleExportPDF}>
         Export as PDF
       </button>
