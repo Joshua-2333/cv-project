@@ -1,3 +1,4 @@
+// src/components/Skills.jsx
 import { useState } from "react";
 import "../styles/Skills.css";
 
