@@ -1,41 +1,62 @@
-// src/components/Skills.jsx
 import { useState } from "react";
 import "../styles/Skills.css";
 
-export default function Skills({ onChange }) {
-  const [skills, setSkills] = useState([]);
+export default function Skills({ skills = [], onChange }) {
   const [input, setInput] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
 
+  // Add or update skill
   function handleSubmit(e) {
     e.preventDefault();
-    if (!input.trim()) return;
+    const trimmed = input.trim();
+    if (!trimmed) return;
+
+    let updatedSkills;
 
     if (isEditing) {
-      const updated = [...skills];
-      updated[editIndex] = input.trim();
-      setSkills(updated);
+      updatedSkills = [...skills];
+      updatedSkills[editIndex] = trimmed;
       setIsEditing(false);
       setEditIndex(null);
     } else {
-      setSkills([...skills, input.trim()]);
+      // prevent duplicates
+      if (skills.includes(trimmed)) {
+        setInput("");
+        return;
+      }
+      updatedSkills = [...skills, trimmed];
     }
 
     setInput("");
-    onChange([...skills, input.trim()]); // send to App
+    onChange(updatedSkills); // update parent state
   }
 
+  // Edit a skill
   function handleEdit(index) {
     setInput(skills[index]);
     setIsEditing(true);
     setEditIndex(index);
   }
 
+  // Delete a skill
   function handleDelete(index) {
     const updated = skills.filter((_, i) => i !== index);
-    setSkills(updated);
     onChange(updated);
+    if (isEditing && editIndex === index) handleCancelEdit();
+  }
+
+  // Cancel editing
+  function handleCancelEdit() {
+    setInput("");
+    setIsEditing(false);
+    setEditIndex(null);
+  }
+
+  // Clear all skills
+  function handleClearAll() {
+    onChange([]);
+    handleCancelEdit();
   }
 
   return (
@@ -48,18 +69,46 @@ export default function Skills({ onChange }) {
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />
-        <button type="submit">{isEditing ? "Update" : "Add"}</button>
+        <button type="submit" disabled={!input.trim()}>
+          {isEditing ? "Update" : "Add"}
+        </button>
+        {isEditing && (
+          <button type="button" onClick={handleCancelEdit}>
+            Cancel
+          </button>
+        )}
+        {skills.length > 0 && !isEditing && (
+          <button type="button" onClick={handleClearAll}>
+            Clear All
+          </button>
+        )}
       </form>
 
-      <ul className="skills-list">
-        {skills.map((skill, index) => (
-          <li key={index}>
-            {skill}
-            <button onClick={() => handleEdit(index)}>Edit</button>
-            <button onClick={() => handleDelete(index)}>Delete</button>
-          </li>
-        ))}
-      </ul>
+      {skills.length > 0 ? (
+        <ul className="skills-list">
+          {skills.map((skill, index) => (
+            <li key={index} className="skills-item">
+              <span>{skill}</span>
+              <div className="skills-actions">
+                <button
+                  type="button"
+                  onClick={() => handleEdit(index)}
+                  aria-label={`Edit ${skill}`}
+                >
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleDelete(index)}
+                  aria-label={`Delete ${skill}`}
+                >
+                  </button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="placeholder">No skills added yet.</p>
+      )}
     </section>
   );
 }

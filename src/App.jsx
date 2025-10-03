@@ -3,6 +3,7 @@ import GeneralInfo from "./components/GeneralInfo";
 import AboutMe from "./components/AboutMe";
 import Education from "./components/Education";
 import Experience from "./components/Experience";
+import Skills from "./components/Skills";
 import CVPreview from "./components/CVPreview";
 import "./styles/App.css";
 
@@ -17,9 +18,10 @@ export default function App() {
   // About Me
   const [about, setAbout] = useState("");
 
-  // Education & Experience (multi-entry lists)
+  // Education, Experience, Skills (multi-entry lists)
   const [education, setEducation] = useState([]);
   const [experience, setExperience] = useState([]);
+  const [skills, setSkills] = useState([]);
 
   // Template selection
   const [template, setTemplate] = useState("classic");
@@ -33,15 +35,16 @@ export default function App() {
       if (parsed.about) setAbout(parsed.about);
       if (parsed.education) setEducation(parsed.education);
       if (parsed.experience) setExperience(parsed.experience);
+      if (parsed.skills) setSkills(parsed.skills);
       if (parsed.template) setTemplate(parsed.template);
     }
   }, []);
 
   // Save to localStorage whenever state changes
   useEffect(() => {
-    const data = { general, about, education, experience, template };
+    const data = { general, about, education, experience, skills, template };
     localStorage.setItem("cvData", JSON.stringify(data));
-  }, [general, about, education, experience, template]);
+  }, [general, about, education, experience, skills, template]);
 
   // Clear all data
   const clearAll = () => {
@@ -49,6 +52,7 @@ export default function App() {
     setAbout("");
     setEducation([]);
     setExperience([]);
+    setSkills([]);
     setTemplate("classic");
     localStorage.removeItem("cvData");
   };
@@ -87,6 +91,9 @@ export default function App() {
 
         {/* Experience */}
         <Experience experienceList={experience} setExperience={setExperience} />
+
+        {/* Skills */}
+        <Skills skills={skills} onChange={setSkills} />
       </main>
 
       {/* CV preview */}
@@ -96,6 +103,7 @@ export default function App() {
           about={about}
           educationList={education}
           experienceList={experience}
+          skills={skills}
           template={template}
         />
       </aside>

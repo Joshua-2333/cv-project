@@ -1,79 +1,72 @@
-
-/* App.css */
-
-/* Global resets */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f0f2f5;
-  color: #111; 
-  line-height: 1.6;
-}
-
-/* App container */
+/* ===== App Layout ===== */
 .app {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  padding: 1rem;
+  width: 100%;
+  max-width: 1200px;
   gap: 1.5rem;
+  margin: 0 auto;
+  padding: 1rem;
+  font-family: 'Inter', sans-serif;
+  color: #1e1e2e;
+  background-color: #f0f2f5;
+  line-height: 1.6;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Header */
 header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
+  text-align: center;
+  margin-bottom: 1rem;
 }
 
 header h1 {
   font-size: 2rem;
-  color: #222;
+  color: #1e1e2e;
 }
 
 header .clear-btn {
-  background-color: #d9534f;
+  background-color: #e74c3c; /* high contrast red */
   color: #fff;
   border: none;
   padding: 0.5rem 1rem;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, outline 0.3s;
 }
 
-header .clear-btn:hover {
-  background-color: #c9302c;
+header .clear-btn:hover,
+header .clear-btn:focus {
+  background-color: #c0392b;
+  outline: 2px solid #c0392b;
+  outline-offset: 2px;
 }
 
-/* Main forms section */
+/* Main form sections */
 .form-sections {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  width: 100%;
 }
 
-/* Form section common */
+/* Form cards */
 .form-section {
   background-color: #fff;
-  border-radius: 8px;
-  padding: 1rem;
-  border: 1px solid #ccc;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
 /* Form headings */
 .form-section h2 {
-  margin-bottom: 0.5rem;
   font-size: 1.25rem;
-  color: #111;
+  color: #0056b3;
+  margin-bottom: 0.75rem;
 }
 
-/* Inputs and textareas */
+/* Inputs */
 input[type="text"],
 input[type="email"],
 input[type="tel"],
@@ -85,7 +78,7 @@ select {
   border-radius: 6px;
   border: 1px solid #999;
   font-size: 1rem;
-  color: #111;
+  color: #1e1e2e;
   background-color: #fff;
 }
 
@@ -106,23 +99,138 @@ button {
   font-size: 1rem;
   background-color: #007bff;
   color: #fff;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, transform 0.1s ease;
 }
 
-button:hover {
+button:hover,
+button:focus {
   background-color: #0056b3;
+  outline: 2px solid #0056b3;
+  outline-offset: 2px;
 }
 
-/* Preview section */
+/* ===== CV Preview ===== */
 .preview-section {
-  background-color: #fff;
-  border-radius: 8px;
-  padding: 1rem;
-  border: 1px solid #ccc;
+  display: flex;
+  justify-content: center;
+  width: 100%;
   margin-top: 1rem;
 }
 
-/* Responsive layout */
+/* Wrapper */
+.cv-preview-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  width: 100%;
+}
+
+/* CV card - Standard A4 Letter */
+.cv-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  font-family: 'Inter', sans-serif;
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  border: 1px solid #ccc;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+
+  /* A4 aspect ratio */
+  width: 210mm;  /* A4 width */
+  height: 297mm; /* A4 height */
+  max-width: 100%;
+  aspect-ratio: 210 / 297;
+  overflow: hidden; /* no internal scrolling */
+  box-sizing: border-box;
+}
+
+/* CV Header */
+.cv-header {
+  text-align: center;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.cv-header h1 {
+  font-size: 1.8rem;
+  color: #1e1e2e;
+}
+
+.cv-header p {
+  font-size: 1rem;
+  color: #333;
+  word-wrap: break-word;
+}
+
+/* Sections */
+.preview-section h2,
+.about h2 {
+  font-size: 1.25rem;
+  color: #007bff;
+  margin-bottom: 0.5rem;
+}
+
+/* Lists */
+.education-list,
+.experience-list,
+.skills-preview {
+  list-style: none;
+  padding-left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.education-item,
+.experience-item {
+  padding: 0.5rem;
+  border-left: 3px solid #007bff;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+/* Skills chips */
+.skills-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.skill-chip {
+  background-color: #e0f0ff;
+  color: #007bff;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Export button */
+.export-btn {
+  align-self: center;
+  background-color: #2ecc71;
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-top: 1rem;
+}
+
+.export-btn:hover,
+.export-btn:focus {
+  background-color: #27ae60;
+  outline: 2px solid #27ae60;
+  outline-offset: 2px;
+}
+
+/* ===== Responsive Layout ===== */
 @media (min-width: 768px) {
   .app {
     flex-direction: row;
@@ -136,14 +244,17 @@ button:hover {
 
   .preview-section {
     flex: 1;
-    position: sticky;
-    top: 1rem;
-    max-height: 90vh;
-    overflow-y: auto;
   }
 }
 
-/* Small devices */
+@media (max-width: 1024px) {
+  .cv-preview {
+    width: 90%;
+    height: auto;
+    aspect-ratio: 210 / 297;
+  }
+}
+
 @media (max-width: 480px) {
   header h1 {
     font-size: 1.5rem;
@@ -152,5 +263,15 @@ button:hover {
   button {
     font-size: 0.9rem;
     padding: 0.4rem 0.8rem;
+  }
+
+  .cv-preview {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .skill-chip {
+    font-size: 0.85rem;
+    padding: 0.3rem 0.6rem;
   }
 }
