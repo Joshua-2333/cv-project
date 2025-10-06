@@ -130,10 +130,9 @@
   page-break-inside: avoid;  /* for PDF export */
 }
 
-/* === Education / Experience / Skills Lists === */
+/* === Education / Experience Lists === */
 .cv-education-list,
-.cv-experience-list,
-.skills-preview {
+.cv-experience-list {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -173,8 +172,8 @@
 /* === Skills (Updated to match Education/Experience style) === */
 .skills-preview {
   display: flex;
-  flex-direction: column;  /* stack skills vertically */
-  gap: 0.5rem;
+  flex-direction: column;
+  gap: 0.4rem;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -197,7 +196,7 @@
 }
 
 .skill-chip:hover {
-  color: #007bff; /* static, no background hover */
+  color: #007bff;
   cursor: default;
 }
 
@@ -205,6 +204,7 @@
 .placeholder {
   color: #aaa;
   font-style: italic;
+  margin-top: 0.2rem;
 }
 
 /* === Responsive Preview === */
