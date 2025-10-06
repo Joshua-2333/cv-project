@@ -1,3 +1,4 @@
+// App.jsx
 import { useState, useEffect } from "react";
 import GeneralInfo from "./components/GeneralInfo";
 import AboutMe from "./components/AboutMe";
@@ -7,26 +8,18 @@ import Skills from "./components/Skills";
 import CVPreview from "./components/CVPreview";
 import "./styles/App.css";
 
+// Import html2pdf.js
+import html2pdf from "html2pdf.js";
+
 export default function App() {
-  // General info (single-entry)
-  const [general, setGeneral] = useState({
-    name: "",
-    email: "",
-    phone: "",
-  });
-
-  // About Me
+  const [general, setGeneral] = useState({ name: "", email: "", phone: "" });
   const [about, setAbout] = useState("");
-
-  // Education, Experience, Skills (multi-entry lists)
   const [education, setEducation] = useState([]);
   const [experience, setExperience] = useState([]);
   const [skills, setSkills] = useState([]);
-
-  // Template selection
   const [template, setTemplate] = useState("classic");
 
-  // Load from localStorage on first mount
+  // Load from localStorage
   useEffect(() => {
     const savedData = localStorage.getItem("cvData");
     if (savedData) {
@@ -40,13 +33,12 @@ export default function App() {
     }
   }, []);
 
-  // Save to localStorage whenever state changes
+  // Save to localStorage
   useEffect(() => {
     const data = { general, about, education, experience, skills, template };
     localStorage.setItem("cvData", JSON.stringify(data));
   }, [general, about, education, experience, skills, template]);
 
-  // Clear all data
   const clearAll = () => {
     setGeneral({ name: "", email: "", phone: "" });
     setAbout("");
@@ -57,56 +49,74 @@ export default function App() {
     localStorage.removeItem("cvData");
   };
 
+  // Export CV as PDF
+  const handleExportPDF = () => {
+    const element = document.querySelector(".cv-preview");
+    if (!element) return;
+
+    const opt = {
+      margin: 0,
+      filename: "my_cv.pdf",
+      image: { type: "jpeg", quality: 1 },
+      html2canvas: { scale: 2, useCORS: true },
+      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+    };
+
+    html2pdf().set(opt).from(element).save();
+  };
+
   return (
     <div className="app">
-      <header>
+      <header className="app-header">
         <h1>CV Builder</h1>
         <button onClick={clearAll} className="clear-btn">
           Clear All Data
         </button>
       </header>
 
-      <main className="form-sections">
-        {/* General Info */}
-        <GeneralInfo generalInfo={general} setGeneralInfo={setGeneral} />
+      <div className="app-body">
+        <main className="form-sections">
+          <GeneralInfo generalInfo={general} setGeneralInfo={setGeneral} />
+          <AboutMe about={about} setAbout={setAbout} />
 
-        {/* About Me */}
-        <AboutMe about={about} setAbout={setAbout} />
+          <div className="form-section">
+            <h2>Choose Template</h2>
+            <select
+              value={template}
+              onChange={(e) => setTemplate(e.target.value)}
+            >
+              <option value="classic">Classic</option>
+              <option value="modern">Modern</option>
+              <option value="minimal">Minimal</option>
+            </select>
+          </div>
 
-        {/* Template selector */}
-        <div className="form-section">
-          <h2>Choose Template</h2>
-          <select
-            value={template}
-            onChange={(e) => setTemplate(e.target.value)}
-          >
-            <option value="classic">Classic</option>
-            <option value="modern">Modern</option>
-            <option value="minimal">Minimal</option>
-          </select>
-        </div>
+          <Education educationList={education} setEducation={setEducation} />
+          <Experience
+            experienceList={experience}
+            setExperience={setExperience}
+          />
+          <Skills skills={skills} onChange={setSkills} />
+        </main>
 
-        {/* Education */}
-        <Education educationList={education} setEducation={setEducation} />
-
-        {/* Experience */}
-        <Experience experienceList={experience} setExperience={setExperience} />
-
-        {/* Skills */}
-        <Skills skills={skills} onChange={setSkills} />
-      </main>
-
-      {/* CV preview */}
-      <aside className="preview-section">
-        <CVPreview
-          generalInfo={general}
-          about={about}
-          educationList={education}
-          experienceList={experience}
-          skills={skills}
-          template={template}
-        />
-      </aside>
+        <aside className="preview-section">
+          <div className="preview-scroll-container">
+            <CVPreview
+              generalInfo={general}
+              about={about}
+              educationList={education}
+              experienceList={experience}
+              skills={skills}
+              template={template}
+            />
+          </div>
+          <div className="export-bar">
+            <button className="export-btn" onClick={handleExportPDF}>
+              Export as PDF
+            </button>
+          </div>
+        </aside>
+      </div>
     </div>
   );
 }

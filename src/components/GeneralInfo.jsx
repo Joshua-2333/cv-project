@@ -18,23 +18,21 @@ export default function GeneralInfo({ generalInfo = {}, setGeneralInfo }) {
     return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6, 10)}`;
   }
 
-  // Email validation
+  // Validations
   function isValidEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   }
 
-  // Name validation (at least 2 words)
   function isValidName(name) {
     return name.trim().split(" ").length >= 2;
   }
 
-  // Phone validation (10 digits)
   function isValidPhone(phone) {
     return /^\(\d{3}\) \d{3}-\d{4}$/.test(phone);
   }
 
   return (
-    <div className="general-info">
+    <section className="general-info">
       <h2>General Information</h2>
       <form className="general-info-form">
         {/* Name */}
@@ -88,6 +86,6 @@ export default function GeneralInfo({ generalInfo = {}, setGeneralInfo }) {
           <small className="error">Invalid phone format</small>
         )}
       </form>
-    </div>
+    </section>
   );
 }

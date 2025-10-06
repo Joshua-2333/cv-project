@@ -1,175 +1,257 @@
-/* CVPreview.css */
+/* ===== CVPreview.css ===== */
 
-/* Wrapper */
+/* === Layout Wrapper === */
 .cv-preview-wrapper {
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  justify-content: center;
   width: 100%;
-  align-items: center;
-  padding: 0.5rem;
-  box-sizing: border-box;
+  background-color: #f9f9f9;
+  overflow: hidden;
 }
 
-/* CV container (fixed to Letter size: 8.5x11in) */
+/* === CV Layout (A4 Letter Feel) === */
 .cv-preview {
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  padding: 1rem 1.25rem;
-  color: #111;
-  line-height: 1.5;
+  width: 210mm;
+  min-height: 297mm;      /* maintain A4 feel */
+  padding: 2rem 2.5rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  width: 8.5in;           /* Fixed Letter width */
-  height: 11in;           /* Fixed Letter height */
-  max-width: 100%;
+  gap: 1.2rem;
+  line-height: 1.5;
+  color: #111;
+  border-radius: 0;
+  overflow-y: auto;       /* scrollable in-browser preview */
+  font-family: "Inter", sans-serif;
   box-sizing: border-box;
-  overflow-y: auto;       /* Scroll internally if content too long */
-  overflow-x: hidden;
-  page-break-inside: avoid;
+  position: relative;
 }
 
-/* Templates */
+/* === Templates === */
+
+/* --- Classic Template --- */
 .template-classic {
-  font-family: 'Georgia', serif;
+  background-color: #fff;
+  color: #111;
+  font-family: "Inter", sans-serif;
 }
 
-.template-modern {
-  font-family: 'Segoe UI', sans-serif;
-}
-
-.template-minimal {
-  font-family: 'Helvetica Neue', sans-serif;
-}
-
-/* Header */
-.cv-preview header {
+.template-classic .cv-header {
   text-align: center;
   border-bottom: 2px solid #007bff;
   padding-bottom: 0.5rem;
-  margin-bottom: 1rem;
 }
 
-.cv-preview header h1 {
-  font-size: 1.8rem;
-  margin-bottom: 0.25rem;
-  color: #222;
-}
-
-.cv-preview header p {
-  font-size: 1rem;
-  color: #333;
-  word-wrap: break-word;
-}
-
-/* Sections */
-.preview-section, .about {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.preview-section h2, .about h2 {
-  font-size: 1.25rem;
+.template-classic .cv-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
   color: #007bff;
-  margin-bottom: 0.5rem;
 }
 
-/* Lists */
-.education-list, .experience-list {
+.template-classic .cv-header p {
+  font-size: 1rem;
+  color: #555;
+}
+
+.template-classic .cv-section h2 {
+  color: #007bff;
+  border-bottom: 1px solid #007bff;
+  font-size: 1.15rem;
+}
+
+/* --- Modern Template --- */
+.template-modern {
+  background-color: #f7faff;
+  color: #003366;
+  font-family: "Roboto", sans-serif;
+}
+
+.template-modern .cv-header {
+  text-align: left;
+  border-left: 5px solid #007bff;
+  padding-left: 1rem;
+}
+
+.template-modern .cv-header h1 {
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: #003366;
+}
+
+.template-modern .cv-header p {
+  font-size: 1rem;
+  color: #0056b3;
+}
+
+.template-modern .cv-section h2 {
+  color: #0056b3;
+  border-bottom: none;
+  font-size: 1.2rem;
+  margin-top: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* --- Compact Template --- */
+.template-compact {
+  background-color: #fffbe6;
+  color: #333;
+  font-family: "Arial", sans-serif;
+  font-size: 0.95rem;
+  padding: 1.5rem 2rem;
+}
+
+.template-compact .cv-header {
+  text-align: center;
+  border-bottom: 1px dashed #ff9900;
+}
+
+.template-compact .cv-header h1 {
+  font-size: 1.8rem;
+  color: #ff9900;
+  font-weight: 600;
+}
+
+.template-compact .cv-header p {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.template-compact .cv-section h2 {
+  font-size: 1rem;
+  color: #ff9900;
+  margin-bottom: 0.3rem;
+}
+
+/* === Sections === */
+.cv-section {
+  display: flex;
+  flex-direction: column;
+  break-inside: avoid;       /* avoid splitting mid-section */
+  page-break-inside: avoid;  /* for PDF export */
+}
+
+/* === Education / Experience / Skills Lists === */
+.cv-education-list,
+.cv-experience-list,
+.skills-preview {
   list-style: none;
-  padding-left: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.cv-education-item,
+.cv-experience-item {
+  margin-bottom: 0.6rem;
+}
+
+.edu-header,
+.exp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.edu-school,
+.exp-company {
+  font-weight: 600;
+}
+
+.edu-date,
+.exp-date {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.edu-study,
+.exp-position,
+.exp-resp {
+  font-size: 0.95rem;
+  color: #333;
+  margin-top: 0.15rem;
+}
+
+/* === Skills === */
+.skills-preview {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
-.education-item, .experience-item {
-  padding: 0.5rem;
-  border-left: 3px solid #007bff;
-  background-color: #f9f9f9;
-  border-radius: 4px;
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  word-break: break-word;
-  font-size: 0.95rem;
+.skill-chip {
+  display: inline-block;
+  background-color: #e0f0ff;
+  color: #007bff;
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  font-weight: 500;
+  position: relative;
 }
 
-/* Bold labels */
-.education-item strong,
-.experience-item strong {
-  color: #111;
+.skill-chip::before {
+  content: "•";
+  color: #007bff;
+  font-weight: 700;
+  display: inline-block;
+  width: 1rem;
+  margin-right: 0.5rem;
 }
 
-/* About me */
-.about p {
-  padding: 0.5rem;
-  background-color: #f4f4f4;
-  border-radius: 6px;
-  line-height: 1.4;
-  word-wrap: break-word;
-}
-
-/* Export button */
-.export-btn {
-  align-self: center;
-  padding: 0.6rem 1.2rem;
-  font-size: 1rem;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  background-color: #28a745;
+.skill-chip:hover {
+  background-color: #007bff;
   color: #fff;
-  transition: background-color 0.3s;
+  cursor: default;
 }
 
-.export-btn:hover {
-  background-color: #218838;
+/* === Placeholder === */
+.placeholder {
+  color: #aaa;
+  font-style: italic;
 }
 
-/* Responsive adjustments */
+/* === Responsive Preview === */
 @media (max-width: 900px) {
   .cv-preview {
-    width: 100%;
-    height: auto;       /* On smaller screens, allow flexible height */
-    aspect-ratio: 8.5 / 11;
-  }
-
-  .cv-preview header h1 {
-    font-size: 1.5rem;
-  }
-
-  .cv-preview header p {
-    font-size: 0.95rem;
-  }
-
-  .preview-section h2, .about h2 {
-    font-size: 1.1rem;
+    width: 95%;
+    height: auto;
+    padding: 1.5rem;
   }
 }
 
 @media (max-width: 480px) {
   .cv-preview {
-    padding: 0.75rem;
-    aspect-ratio: 8.5 / 11;
+    width: 100%;
+    padding: 1rem 1.2rem;
   }
 
-  .cv-preview header h1 {
-    font-size: 1.25rem;
+  .cv-header h1 {
+    font-size: 1.6rem;
   }
 
-  .cv-preview header p {
+  .cv-header p {
     font-size: 0.9rem;
   }
 
-  .education-item, .experience-item {
-    font-size: 0.85rem;
+  .skill-chip {
+    font-size: 0.9rem;
+    padding: 0.3rem 0.65rem;
+  }
+}
+
+/* === PDF Export Fix (Supports Multiple Pages) === */
+@media print {
+  .cv-preview {
+    width: 210mm;
+    min-height: 297mm;
+    overflow: visible !important;
+    padding: 2rem 2.5rem;
   }
 
-  .export-btn {
-    width: 100%;
+  .cv-section {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .cv-header {
+    page-break-after: avoid;
   }
 }

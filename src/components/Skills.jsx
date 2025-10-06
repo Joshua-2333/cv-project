@@ -6,54 +6,49 @@ export default function Skills({ skills = [], onChange }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
 
-  // Add or update skill
+  const trimmedInput = input.trim();
+
   function handleSubmit(e) {
     e.preventDefault();
-    const trimmed = input.trim();
-    if (!trimmed) return;
+    if (!trimmedInput) return;
 
     let updatedSkills;
 
     if (isEditing) {
       updatedSkills = [...skills];
-      updatedSkills[editIndex] = trimmed;
+      updatedSkills[editIndex] = trimmedInput;
       setIsEditing(false);
       setEditIndex(null);
     } else {
-      // prevent duplicates
-      if (skills.includes(trimmed)) {
+      if (skills.includes(trimmedInput)) {
         setInput("");
         return;
       }
-      updatedSkills = [...skills, trimmed];
+      updatedSkills = [...skills, trimmedInput];
     }
 
+    onChange(updatedSkills);
     setInput("");
-    onChange(updatedSkills); // update parent state
   }
 
-  // Edit a skill
   function handleEdit(index) {
     setInput(skills[index]);
     setIsEditing(true);
     setEditIndex(index);
   }
 
-  // Delete a skill
   function handleDelete(index) {
     const updated = skills.filter((_, i) => i !== index);
     onChange(updated);
     if (isEditing && editIndex === index) handleCancelEdit();
   }
 
-  // Cancel editing
   function handleCancelEdit() {
     setInput("");
     setIsEditing(false);
     setEditIndex(null);
   }
 
-  // Clear all skills
   function handleClearAll() {
     onChange([]);
     handleCancelEdit();
@@ -69,15 +64,17 @@ export default function Skills({ skills = [], onChange }) {
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />
-        <button type="submit" disabled={!input.trim()}>
+        <button type="submit" disabled={!trimmedInput}>
           {isEditing ? "Update" : "Add"}
         </button>
+
         {isEditing && (
           <button type="button" onClick={handleCancelEdit}>
             Cancel
           </button>
         )}
-        {skills.length > 0 && !isEditing && (
+
+        {!isEditing && skills.length > 0 && (
           <button type="button" onClick={handleClearAll}>
             Clear All
           </button>
@@ -90,18 +87,25 @@ export default function Skills({ skills = [], onChange }) {
             <li key={index} className="skills-item">
               <span>{skill}</span>
               <div className="skills-actions">
+                {/* Edit Button */}
                 <button
                   type="button"
                   onClick={() => handleEdit(index)}
                   aria-label={`Edit ${skill}`}
+                  className="edit-btn"
                 >
+                  <span className="material-symbols-outlined">edit</span>
                 </button>
+
+                {/* Delete Button */}
                 <button
                   type="button"
                   onClick={() => handleDelete(index)}
                   aria-label={`Delete ${skill}`}
+                  className="delete-btn"
                 >
-                  </button>
+                  <span className="material-symbols-outlined">delete</span>
+                </button>
               </div>
             </li>
           ))}

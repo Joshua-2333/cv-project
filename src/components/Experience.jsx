@@ -29,7 +29,13 @@ export default function Experience({ experienceList, setExperience }) {
     } else {
       setExperience([...experienceList, form]);
     }
-    setForm({ company: "", position: "", responsibilities: "", fromDate: "", untilDate: "" });
+    setForm({
+      company: "",
+      position: "",
+      responsibilities: "",
+      fromDate: "",
+      untilDate: "",
+    });
   }
 
   function handleEdit(index) {
@@ -47,6 +53,7 @@ export default function Experience({ experienceList, setExperience }) {
     <section className="experience">
       <h2>Experience</h2>
 
+      {/* Form for adding/editing entries */}
       <form onSubmit={handleSubmit} className="experience-form">
         <input
           type="text"
@@ -91,19 +98,25 @@ export default function Experience({ experienceList, setExperience }) {
         <button type="submit">{isEditing ? "Update" : "Add"}</button>
       </form>
 
-      <div className="experience-list">
+      {/* Experience entries list */}
+      <ul className="experience-list">
         {experienceList.map((exp, index) => (
-          <div key={index} className="experience-entry">
-            <p><strong>Company:</strong> {exp.company}</p>
-            <p><strong>Position:</strong> {exp.position}</p>
-            <p><strong>Responsibilities:</strong> {exp.responsibilities}</p>
-            <p><strong>From:</strong> {exp.fromDate}</p>
-            <p><strong>Until:</strong> {exp.untilDate}</p>
-            <button onClick={() => handleEdit(index)}>Edit</button>
-            <button onClick={() => handleDelete(index)}>Delete</button>
-          </div>
+          <li key={index} className="experience-entry">
+            {exp.company && <p><strong>Company:</strong> {exp.company}</p>}
+            {exp.position && <p><strong>Position:</strong> {exp.position}</p>}
+            {exp.responsibilities && <p><strong>Responsibilities:</strong> {exp.responsibilities}</p>}
+            {(exp.fromDate || exp.untilDate) && (
+              <p>
+                <strong>Duration:</strong> {exp.fromDate || "Start"} – {exp.untilDate || "Present"}
+              </p>
+            )}
+            <div className="experience-entry-buttons">
+              <button onClick={() => handleEdit(index)}>Edit</button>
+              <button onClick={() => handleDelete(index)}>Delete</button>
+            </div>
+          </li>
         ))}
-      </div>
+      </ul>
     </section>
   );
 }
