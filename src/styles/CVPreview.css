@@ -170,35 +170,34 @@
   margin-top: 0.15rem;
 }
 
-/* === Skills === */
+/* === Skills (Updated to match Education/Experience style) === */
 .skills-preview {
   display: flex;
-  flex-direction: column;
+  flex-direction: column;  /* stack skills vertically */
   gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .skill-chip {
   display: inline-block;
-  background-color: #e0f0ff;
-  color: #007bff;
-  padding: 0.35rem 0.75rem;
-  border-radius: 20px;
-  font-weight: 500;
   position: relative;
+  font-weight: 500;
+  padding-left: 1.2rem; /* space for bullet */
+  color: #007bff;
 }
 
 .skill-chip::before {
   content: "•";
+  position: absolute;
+  left: 0;
   color: #007bff;
   font-weight: 700;
-  display: inline-block;
-  width: 1rem;
-  margin-right: 0.5rem;
 }
 
 .skill-chip:hover {
-  background-color: #007bff;
-  color: #fff;
+  color: #007bff; /* static, no background hover */
   cursor: default;
 }
 
@@ -233,7 +232,7 @@
 
   .skill-chip {
     font-size: 0.9rem;
-    padding: 0.3rem 0.65rem;
+    padding-left: 1rem;
   }
 }
 
