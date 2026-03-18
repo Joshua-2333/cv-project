@@ -1,16 +1,48 @@
-# React + Vite
+# 📄 CV Application Builder
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Demo 
+https://cvapplicationbuilder.netlify.app/
 
-Currently, two official plugins are available:
+A dynamic CV (Resume) builder web application that allows users to create, edit, and organize professional resumes directly in the browser. Designed for simplicity and efficiency, this app helps users quickly generate structured CV content.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Input personal information (name, email, phone, etc.)
+- Add and manage education history
+- Add and edit work experience
+- List and update skills
+- Real-time form editing
+- Structured CV preview layout
+- Easy data management within the UI
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Built With
+
+- HTML5
+- CSS3
+- JavaScript (ES6+)
+- Modular component-based structure
+
+---
+
+## Overview
+
+The application includes structured sections for:
+
+- Personal Information  
+- Education  
+- Work Experience  
+- Skills  
+
+Users can input and update their information dynamically, making it easy to build a complete CV in one place. :contentReference[oaicite:0]{index=0}
+
+---
+
+## Installation & Setup
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Joshua-2333/cv-application-builder.git
